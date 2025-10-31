@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./test/**/*.test.js --timeout=20000"
+    "test": "mocha ./test/**/*.test.js --timeout=20000 --reporter mochawesome"
   },
   "keywords": [],
   "author": "",
