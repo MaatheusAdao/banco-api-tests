@@ -1,11 +1,14 @@
 import request from 'supertest';
 import {expect} from 'chai';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 describe('Tranferencias', () => {
     describe('POST/tranferencias', () => {
         it('Deve retornar sucesso com 201 quando o valor for maior ou que R$:10,00 reias',async () => {
             //Capturando  o token
-            const respostaLogin = await request('http://localhost:3000')
+            const respostaLogin = await request(process.env.BASE_URL)
                 .post('/login')
                 .set('Content-Type', 'application/json')
                 .send({
@@ -16,7 +19,7 @@ describe('Tranferencias', () => {
             const token = respostaLogin.body.token
             
 
-            const resposta = await request('http://localhost:3000')
+            const resposta = await request(process.env.BASE_URL)
                 .post('/transferencias')
                 .set('Content-Type', 'application/json')
                 .set ('Authorization',`Bearer ${token}`)
