@@ -6,11 +6,15 @@ import { obterToken } from '../helpers/autenticacao.js';
 
 describe('Tranferencias', () => {
     describe('POST/tranferencias', () => {
+        let token
+        beforeEach(async() =>{
+
+              token = await obterToken ('julio.lima','123456')
+
+        })
+        
         it('Deve retornar sucesso com 201 quando o valor for maior ou que R$:10,00 reias',async () => {
           
-            const token = await obterToken ('julio.lima','123456')
-            
-
             const resposta = await request(process.env.BASE_URL)
                 .post('/transferencias')
                 .set('Content-Type', 'application/json')
@@ -28,7 +32,7 @@ describe('Tranferencias', () => {
 
          it('Deve retornar fracaso com 422 quando o valor for menor que R$:10,00 reias',async  () => {
     
-            const token = await obterToken ('julio.lima','123456')
+        
             
 
             const resposta = await request(process.env.BASE_URL)
