@@ -3,6 +3,9 @@ import {expect} from 'chai';
 import dotenv from 'dotenv';
 dotenv.config();
 import { obterToken } from '../helpers/autenticacao.js';
+import postTransferencias from '../fixtures/postTransferencias.json' assert { type: 'json' };
+
+
 
 describe('Tranferencias', () => {
     describe('POST/tranferencias', () => {
@@ -15,26 +18,24 @@ describe('Tranferencias', () => {
         
         it('Deve retornar sucesso com 201 quando o valor for maior ou que R$:10,00 reias',async () => {
           
+            const bodyTranferencias = {...postTransferencias}
+
             const resposta = await request(process.env.BASE_URL)
                 .post('/transferencias')
                 .set('Content-Type', 'application/json')
                 .set ('Authorization',`Bearer ${token}`)
-                .send({
-                    contaOrigem: 1,
-                    contaDestino: 2,
-                    valor: 10.99,
-                    token: "string"
-                    })
+                .send(bodyTranferencias)
 
                 expect(resposta.status).to.equal(201);
 
         })
 
          it('Deve retornar fracaso com 422 quando o valor for menor que R$:10,00 reias',async  () => {
-    
-        
-            
+             
+            const bodyTranferencias = {...postTransferencias}
 
+            bodyTranferencias.valor = 7
+        
             const resposta = await request(process.env.BASE_URL)
                 .post('/transferencias')
                 .set('Content-Type', 'application/json')
